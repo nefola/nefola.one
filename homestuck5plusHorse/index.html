@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Homestuck5plusHorse</title>
+
+  <link rel="shortcut icon" href="./jade2-modified.png" type="image/x-icon">
+
+  <meta content="Homestuck5plusHorse" property="og:title" />
+  <meta content="Homestuck5plusHorse is a tool to format Homestuck style dialogue. Entering homestuck style dialogue in the left text area will generate formatted homestuck dialogue in the right area." property="og:description" />
+  <meta content="https://nefola.one/homestuck5plusHorse/" property="og:url" />
+  <meta content="#0715cd" data-react-helmet="true" name="theme-color" />
+
+  <style id="genAo3Style"></style>
+  <style id="genGdocsStyle"></style>
+  <style id="genMspfaStyle"></style>
+  <style id="genHphStyle"></style>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  
+  <div id="textWrap">
+    <textarea name="input" id="input" onkeyup="transcribe()">Welcome to Homestuck5+Horse! Use $EB Help!$- button to learn more about this syntax.
+
+TT+: That help button is more insightful than this example.
+
+Oh. Hi Ruth.
+
+TT+: Hello, Astral.
+AG: The format demo on hs5+ is 8etter than this too.
+
+Yeah I just wanted to show off the hph exclusive defaults. This is basically just normal hs5+ but with the Horse Piss Heart workskin as an option. HPH also happens to be mostly computable with godfeels.
+
+$dirk By that you mean you stole most of it from godfeels.
+
+QA: Yes jegus its stolen
+
+There is still some export issues for custom css in Horse Piss Heart mode, but if you are working off either HPH or Godfeels as a base they should be perfectly solveable.
+    </textarea>
+    <div id="outputs">
+      <div id="outputHeader">Display style: <select name="showWork" id="showWork" onchange="showWork()">
+        <option value="workskin">Archive Of Our Own</option>
+        <option value="slide">MS Paint Fan Adventures</option>
+        <option value="discord">Discord</option>
+        <option value="tumblr">Tumblr</option>
+        <option value="gdocs">Google Docs</option>
+        <option value="cohost">Cohost / Plain HTML</option>
+        <option value="epilogue">Epilogue HTML</option>
+        <option value="hph">Horse Piss Heart</option>
+      </select></div>
+      <div id="works">
+        <div id="workskin" class="workskin work"></div>
+        <div id="slide" class="mspfa work" style="display: none;"></div>
+        <div id="discord" class="discord work" style="display: none;"></div>
+        <div id="tumblr" class="tumblr work" style="display: none;"></div>
+        <div id="gdocs" class="gdocs work" style="display: none;"></div>
+        <div id="cohost" class="cohost work" style="display: none;"></div>
+        <div id="epilogue" class="epilogue work" style="display: none;"></div>
+        <div id="hph" class="horse work" style="display: none;"></div>
+      </div>
+      <div id="discordChara">2000</div>
+    </div>
+  </div>
+  <div id="options">
+    <div>
+      <button onclick="openPopup('help')" id="helpBtn">Help!</button>
+      <button onclick="openPopup('about')" id="aboutBtn">About</button>
+      <button onclick="openPopup('format')" id="formatsBtn">Edit Formats</button>
+    </div>
+    <div id="title">
+      <span style="color: #2ed73a">Homestuck5</span><span style="color: #e00707">plus</span><span style="color: #e67c73">Horse</span>
+    </div>
+    <div style="text-align: left;">
+      <button onclick="openPopup('copy')" id="copyBtn">Copy Output</button>
+    </div>
+  </div>
+
+  <div id="popup" onclick="closePopup()">
+
+    <div id="help">
+      <h1>Homestuck 5+Horse Help</h1>
+      <p>Homestuck 5+Horse is a tool to format Homestuck style dialogue. Entering homestuck style dialogue in the left text area will generate formatted homestuck dialogue in the right area.</p>
+      <p>If a line begins with a handle, it will be formatted as a pesterlog.</p>
+      <div class="ex">
+        <div>LORE: hehehe Hello!!</div>
+        <div>→</div>
+        <div>LORE: hehehe Hello!!</div>
+      </div>
+      <p>If that handle has an associated colour class, that specific line will be formatted in that colour. These can be viewed and edited by pressing the Edit Formats button.</p>
+      <div class="ex">
+        <div>
+          ROSE: Hello Dave. <br>
+          DAVE: sup <br>
+          JADE: hi guys!!
+        </div>
+        <div>→</div>
+        <div>
+          <span style="color: #b536da">ROSE: Hello Dave.</span><br>
+          <span style="color: #e00707">DAVE: sup</span><br>
+          <span style="color: #4ac925">JADE: hi guys!!</span><br>
+        </div>
+      </div>
+      <p>Handles that include "-" will have them removed when they are formatted.</p>
+      <div class="ex">
+        <div>
+          TT: Hello. <br>
+          TT-: Sup. <br>
+          GG-: gosh! <br>
+          UU-: FUCK
+        </div>
+        <div>→</div>
+        <div>
+          <span style="color: #b536da">TT: Hello.</span><br>
+          <span style="color: #f2a400">TT: Sup.</span><br>
+          <span style="color: #00d5f2">GG: gosh!</span><br>
+          <span style="color: #323232">UU: FUCK</span><br>
+        </div>
+      </div>
+      <p>The {Handle} syntax will be expanded into the corrisponding chumHandle, provided the handle has an associated handle. These can also be viewed and edited by pressing the Edit Formats button. This will also mark the paragraph as a pesterlog.</p>
+      <div class="ex">
+        <div>{CG}'s computer exploded</div>
+        <div>→</div>
+        <div><span style="color: #626262">carcinoGeneticist [CG]</span>'s computer <br> exploded</div>
+      </div>
+      <p>Adding P, F or C before the Handle will add PAST, FUTURE and CURRENT respectively before the chumHandle. This will also work as message handles</p>
+      <div class="ex">
+        <div>{PCG}'s computer exploded</div>
+        <div>→</div>
+        <div><span style="color: #626262">PAST carcinoGeneticist [CG]</span>'s <br> computer exploded</div>
+      </div>
+      <p>Pesterlogs can be also manually assinged by writing %LOG% at the top of a paragraph.</p>
+      <div class="ex">
+        <div>%LOG% <br> This would be normal otherwise.</div>
+        <div>→</div>
+        <div>This would be normal otherwise.</div>
+      </div>
+      <p>Formats can also be called outside of pesterlogs using the $Handle syntax, and then closed with $- or at the end of the text line.</p>
+      <div class="ex">
+        <div>"$GG june?$-" I heard her call, "$GG is <br> that you?$-"</div>
+        <div>→</div>
+        <div style="display: none;"></div> 
+        <div>"<span style="color: #4ac925; font-family: 'Courier New', Courier, monospace; font-weight: bold;">june?</span>" I heard her call, "<span style="color: #4ac925; font-family: 'Courier New', Courier, monospace; font-weight: bold;">is that you?</span>"</div>
+      </div>
+      <p>Format colours can be used without the pesterlog font with the $$Handle syntax, and then also closed with $- or at the end of a text line. Using this will make your work incompatible with the AO3 Homestuck workskin. These sections have the html class of [Handle]-plain</p>
+      <div class="ex">
+        <div>$$AG Deep 8reath.</div>
+        <div>→</div>
+        <div style="display: none;"></div> 
+        <div><span style="color: #005682">Deep 8reath.</span></div>
+      </div>
+      <p>Once finished, press the Copy Html & CSS button to copy the generated HTML. Then simply paste that in to your fanficion site of choice, and ensure the associated workskin or CSS is applied. If you are using the default formatting options and putting your work on AO3, all you need to do is apply the standard Homestuck workskin. Otherwise you will need to make your own workskin.</p>
+    </div>
+
+    <div id="about">
+      <h1>About Homestuck 5+Horse</h1>
+      <p>Homestuck 5+Horse is a mod of FlaringK's <a href="https://flaringk.github.io/homestuck5plus/">Homestuck5+</a>, which was inspired by <a href="http://www.homestuck5.com/">homestuck5</a> created by <a href="https://archiveofourown.org/works/22868386">itsdave on AO3</a>.</p>
+      <p>This is just Homestuck 5+ but with one added fomrat.</p>
+      <p>Dialogue written by <a href="https://nefola.one">nefola</a></p>
+      <p>Homestuck 5+ Made by <a href="https://flaringk.github.io/">FlaringK</a></p>
+    </div>
+
+    <div id="format">
+      <h1>Edit Formats</h1>
+      <p><b>Basic options</b></p>
+      <p>
+        <div class="opt"> <label for="autoLog">Enable auto pesterlog formatting</label> <input type="checkbox" name="autoLog" id="autoLog" onchange="transcribe()" checked></div>
+        <div class="opt"> <label for="handleUpper">Captitalise pesterlog handles</label> <input type="checkbox" name="handleUpper" id="handleUpper" onchange="transcribe()"></div>
+        <div class="opt"> <label for="fullColorChum">Fully colour expanded chumhandles</label> <input type="checkbox" name="fullColorChum" id="fullColorChum" onchange="transcribe()" checked></div>
+      </p>
+      <p>
+        <b>Character Formats</b> <br> Edit the formats' names and chumhandle
+      </p>
+      <p>
+        <button onclick="restoreDefaultFormats(defultFormats)">Restore AO3 compatible formats</button>
+        <button onclick="restoreDefaultFormats(homestuckFormats)">Restore Homestuck accurate formats</button>
+      </p>
+      <div id="userFormats" class="formatInteract"></div>
+      <p>
+        <label for="userFormatJson">Exported JSON string:</label> <input type="text" name="userFormatJson" id="userFormatJson" style="width: 80%;">
+      </p>
+      <p><b>Add Formats</b> <br> New formats may not be included in AO3's standard homstuck workskin, and will require a custom workskin to be compatible. The format class name will be the html class given to the span.</p>
+      <div class="formatInteract">
+        <label for="newFormatName">Format Class Name</label> <input type="text" name="newFormatName" id="newFormatName"> <br>
+        <label for="newFormatCol">Format Color</label> <input type="color" name="newFormatCol" id="newFormatCol"> or <input type="text" onchange="document.getElementById(`newFormatCol`).value = this.value" placeholder="#000000"> <br>
+        <button onclick="addNewFormat()">Add new format</button>
+      </div>
+      <p><b>Add dual format</b> <br> Dual formats will format pesterlog handles as diffrent colours then their messages. Dual formats can only be composed of existing formats, so you will have to add each colour of a new dual format before combining them below.</p>
+      <div class="formatInteract">
+        <label for="newDualFormatName">Dual Format Class Name</label> <input type="text" name="newDualFormatName" id="newDualFormatName"> <br>
+        <label for="newFormatName">Dual format Handle</label> <select name="dualFormatHandle" id="dualFormatHandle"></select> <br>
+        <label for="newFormatCol">Dual format Text</label> <select name="dualFormatText" id="dualFormatText"></select> <br>
+        <button onclick="addNewDualFormat()">Add new dual format</button>
+      </div>
+      <p><b>Import Formats</b> <br> Formats will automatically be saved in local storage when they are changed, however you can import a group of formats by pasting in it's JSON string below.</p>
+      <p>
+        <label for="importJson">Import JSON string:</label> <input type="text" name="importJson" id="importJson" style="width: 80%;"> <br>
+        <button onclick="importJson()">Import</button>
+      </p>
+    </div>
+
+    <div id="copy">
+      <h1>Copy Html</h1>
+      <div id="workskin-out">
+        <h2>Selected style: Archive of our own</h2>
+        <p>
+          <div id="skinStatus">Work is compatible</div>
+        </p>
+        <p style="text-align: center;">
+          <b>HTML</b> <br>
+          <textarea name="finalAo3Html" id="finalAo3Html" cols="70" rows="10" style="margin: auto; display: block;"></textarea>
+        </p>
+        <p style="text-align: center;" id="ao3CssCopy">
+          <b>CSS</b> <br>
+          <textarea name="finalAo3CSS" id="finalAo3CSS" cols="70" rows="10" style="margin: auto; display: block;"></textarea>
+        </p>
+      </div>
+      <div id="slide-out">
+        <h2>Selected style: MS Paint Fan Adventures</h2>
+        <p style="text-align: center;">
+          <b>HTML</b> <br>
+          <textarea name="finalMspfaHtml" id="finalMspfaHtml" cols="70" rows="10" style="margin: auto; display: block;"></textarea>
+        </p>
+        <p style="text-align: center;">
+          <b>HTML (JSON compatible)</b> <br>
+          <textarea name="finalMspfaHtmlEsc" id="finalMspfaHtmlEsc" cols="70" rows="10" style="margin: auto; display: block;"></textarea>
+        </p>
+      </div>
+      <div id="discord-out">
+        <h2>Selected style: Discord</h2>
+        <p style="text-align: center;">
+          <b>Text</b> <br>
+          <textarea name="finalDiscord" id="finalDiscord" cols="70" rows="10" style="margin: auto; display: block;"></textarea>
+        </p>
+      </div>
+      <div id="tumblr-out">
+        <h2>Selected style: Tumblr</h2>
+        <p style="text-align: center;">
+          <b>HTML</b> <br>
+          <textarea name="finalTumblr" id="finalTumblr" cols="70" rows="10" style="margin: auto; display: block;"></textarea>
+        </p>
+        <p>
+          <b>How to format your tumblr post</b> <br>
+          Posting works on tumblr is a tad tricky due to the tumblr editor being... sub-optimal. On the tumblr post editor, click the gear icon in the corner and change your text editor to HTML. Then paste in your work.
+          <img src="./tumblr-tutorial.png" class="tumblr-tutorial">
+          After you paste your work in, enter the Preview tab. For each pesterlog in your work, highlight any part of it's text and change it's paragraph type to Chat.
+          <img src="./tumblr-tutorial-2.png" class="tumblr-tutorial">
+          If you go back and edit the pesterlog, you will have to reapply the Chat format. 
+        </p>
+      </div>
+      <div id="gdocs-out">
+        <h2>Selected style: Google Docs</h2>
+        <p>The below output has been styled in such a way that copying it and pasting it into google docs will preserve it's formatting. This will not work on Firefox, as Firefox strips text of it's formatting when copied from a web page.</p>
+        <p style="text-align: center;">
+          <b>Output (Select and copy all)</b> <br>
+          <div id="finalGdocs"></div>
+        </p>
+      </div>
+      <div id="cohost-out">
+        <h2>Selected style: Cohost / Plain HTML</h2>
+        <p style="text-align: center;">
+          <b>HTML</b> <br>
+          <textarea name="finalCohost" id="finalCohost" cols="70" rows="10" style="margin: auto; display: block;"></textarea>
+        </p>
+      </div>
+      <div id="epilogue-out">
+        <h2>Selected style: Epilogue HTML</h2>
+        <p style="text-align: center;">
+          <b>HTML</b> <br>
+          <textarea name="finalEpilogue" id="finalEpilogue" cols="70" rows="10" style="margin: auto; display: block;"></textarea>
+        </p>
+      </div>
+      <div id="hph-out"> 
+        <h2>Selected style: Horse Piss Heart</h2>
+        <p>
+        <div id="skinStatus">Work is compatible</div>
+        </p>
+        <p style="text-align: center;">
+          <b>HTML</b> <br>
+          <textarea name="finalHph" id="finalHph" cols="70" rows="10"
+            style="margin: auto; display: block;"></textarea>
+        </p>
+        <p style="text-align: center;" id="hphCssCopy">
+          <b>CSS</b> <br>
+          <textarea name="finalHphCSS" id="finalHphCSS" cols="70" rows="10" style="margin: auto; display: block;"></textarea>
+        </p>
+    </div>
+
+  </div>
+
+  <script src="./homestuck6.js"></script>
+
+</body>
+</html>
