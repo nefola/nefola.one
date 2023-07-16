@@ -19,3 +19,21 @@ body,
 .noMarg {
     margin: 0px;
 }
+
+div.plural-stuff {
+    background-color: #4ba392;
+    
+}
+
+#SPF {
+    text-align: center;
+}
+
+.favi {
+    max-width: 300px;
+    border-radius: 10%;
+}
+
+.title {
+    text-align: center;
+}

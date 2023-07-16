@@ -1,3 +1,7 @@
+// SimplyPlural Fronters by Teal In Tandem (nefola)
+// this program uses a simply plural user token to display who is fronting as some elements on a webpage, and you can style them hoever you want
+// if you find a fix to the double display on multifront bug, let me know. also yeah the code is a mess we know
+
 var fronters;
 var frontMembers = [];
 var imbed;
